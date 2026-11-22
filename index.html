@@ -1,0 +1,2114 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday, My Favorite Person 💙</title>
+  
+  <!-- Google Fonts: Playfair Display (Elegan), Plus Jakarta Sans (Modern), Caveat (Handwriting) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       1. VARIABEL TEMA & RESET DASAR
+       ========================================================================== */
+    :root {
+      --navy-deep: #050d1a;
+      --navy-mid: #0a1931;
+      --blue-royal: #185adb;
+      --blue-soft: #4a90e2;
+      --baby-blue: #a2d2ff;
+      --ice-blue: #e0f2fe;
+      --silver: #cbd5e1;
+      --white: #ffffff;
+      --glass-bg: rgba(15, 35, 68, 0.45);
+      --glass-border: rgba(162, 210, 255, 0.25);
+      --glow-blue: 0 0 25px rgba(74, 144, 226, 0.45);
+      --glow-soft: 0 8px 32px rgba(2, 8, 23, 0.6);
+      --font-serif: 'Playfair Display', Georgia, serif;
+      --font-sans: 'Plus Jakarta Sans', sans-serif;
+      --font-hand: 'Caveat', cursive;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: radial-gradient(circle at top, #0f284e 0%, var(--navy-mid) 45%, var(--navy-deep) 100%);
+      color: var(--white);
+      font-family: var(--font-sans);
+      overflow-x: hidden;
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--navy-deep);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(var(--blue-soft), var(--baby-blue));
+      border-radius: 10px;
+    }
+
+    /* ==========================================================================
+       2. BACKGROUND AMBIENT (BINTANG, BULAN, AWAN, PARTIKEL)
+       ========================================================================== */
+    #ambient-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .moon-glow {
+      position: fixed;
+      top: 6%;
+      right: 8%;
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #ffffff, #dbeafe 60%, #93c5fd 100%);
+      box-shadow: 0 0 50px rgba(162, 210, 255, 0.6), 0 0 100px rgba(74, 144, 226, 0.3);
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.85;
+      animation: floatSlow 8s ease-in-out infinite;
+    }
+
+    .cloud {
+      position: fixed;
+      background: radial-gradient(ellipse at center, rgba(162, 210, 255, 0.08) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+      filter: blur(20px);
+    }
+    .cloud-1 { width: 450px; height: 180px; top: 12%; left: -100px; animation: drift 35s linear infinite; }
+    .cloud-2 { width: 550px; height: 220px; bottom: 15%; right: -150px; animation: driftReverse 42s linear infinite; }
+
+    @keyframes floatSlow {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-12px); }
+    }
+    @keyframes drift {
+      0% { transform: translateX(-100px); }
+      100% { transform: translateX(110vw); }
+    }
+    @keyframes driftReverse {
+      0% { transform: translateX(100px); }
+      100% { transform: translateX(-110vw); }
+    }
+
+    /* Glassmorphism Utility */
+    .glass-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      box-shadow: var(--glow-soft);
+    }
+
+    /* ==========================================================================
+       3. HALAMAN PASSWORD (LOCK SCREEN)
+       ========================================================================== */
+    #lock-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: radial-gradient(circle at center, #0e2447 0%, #040914 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+
+    #lock-screen.unlocked {
+      opacity: 0;
+      transform: scale(1.08);
+      pointer-events: none;
+    }
+
+    .lock-box {
+      max-width: 430px;
+      width: 100%;
+      padding: 40px 30px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .lock-box::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(transparent, rgba(162, 210, 255, 0.15), transparent 30%);
+      animation: rotateBorder 8s linear infinite;
+      z-index: -1;
+    }
+
+    @keyframes rotateBorder {
+      100% { transform: rotate(360deg); }
+    }
+
+    .lock-icon-wrap {
+      width: 74px;
+      height: 74px;
+      margin: 0 auto 20px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(74, 144, 226, 0.25), rgba(162, 210, 255, 0.15));
+      border: 1px solid rgba(162, 210, 255, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      box-shadow: var(--glow-blue);
+      animation: pulseHeart 2.2s infinite;
+    }
+
+    @keyframes pulseHeart {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+    }
+
+    .lock-title {
+      font-family: var(--font-serif);
+      font-size: 1.55rem;
+      color: var(--white);
+      margin-bottom: 10px;
+    }
+
+    .lock-subtitle {
+      font-size: 0.92rem;
+      color: var(--baby-blue);
+      margin-bottom: 24px;
+    }
+
+    .pass-input {
+      width: 100%;
+      padding: 14px 18px;
+      border-radius: 14px;
+      border: 1px solid rgba(162, 210, 255, 0.35);
+      background: rgba(5, 13, 26, 0.65);
+      color: var(--white);
+      font-size: 1.1rem;
+      text-align: center;
+      letter-spacing: 4px;
+      outline: none;
+      transition: 0.3s;
+      margin-bottom: 16px;
+    }
+
+    .pass-input:focus {
+      border-color: var(--baby-blue);
+      box-shadow: 0 0 18px rgba(162, 210, 255, 0.35);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #2563eb, #60a5fa);
+      color: var(--white);
+      border: none;
+      padding: 14px 28px;
+      border-radius: 50px;
+      font-family: var(--font-sans);
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.45);
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(96, 165, 250, 0.6);
+    }
+
+    .btn-primary:active {
+      transform: scale(0.97);
+    }
+
+    .error-msg {
+      min-height: 24px;
+      margin-top: 14px;
+      font-size: 0.88rem;
+      color: #93c5fd;
+      font-style: italic;
+    }
+
+    .shake {
+      animation: shakeAnim 0.45s ease-in-out;
+    }
+
+    @keyframes shakeAnim {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-8px); }
+      40%, 80% { transform: translateX(8px); }
+    }
+
+    /* ==========================================================================
+       4. LOADING SCREEN & HALAMAN PEMBUKA (GIFT BOX)
+       ========================================================================== */
+    #loading-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 9000;
+      background: var(--navy-deep);
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .spinner-ring {
+      width: 60px;
+      height: 60px;
+      border: 3px solid rgba(162, 210, 255, 0.2);
+      border-top-color: var(--baby-blue);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-bottom: 18px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Konten Utama tersembunyi sampai password terbuka */
+    #main-wrapper {
+      display: none;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Navigasi Minimalis */
+    nav.navbar {
+      position: fixed;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      background: rgba(8, 20, 42, 0.72);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(162, 210, 255, 0.2);
+      padding: 10px 20px;
+      border-radius: 50px;
+      display: flex;
+      gap: 14px;
+      max-width: 94vw;
+      overflow-x: auto;
+      scrollbar-width: none;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    }
+    nav.navbar::-webkit-scrollbar { display: none; }
+
+    nav.navbar a {
+      color: var(--silver);
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 500;
+      white-space: nowrap;
+      padding: 5px 10px;
+      border-radius: 20px;
+      transition: 0.3s;
+    }
+
+    nav.navbar a:hover, nav.navbar a.active {
+      color: var(--white);
+      background: rgba(74, 144, 226, 0.28);
+    }
+
+    /* Floating Music Button */
+    .music-float {
+      position: fixed;
+      bottom: 22px;
+      right: 22px;
+      z-index: 1000;
+      background: rgba(15, 35, 68, 0.8);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--baby-blue);
+      color: var(--white);
+      padding: 10px 16px;
+      border-radius: 50px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.82rem;
+      box-shadow: var(--glow-blue);
+      transition: 0.3s;
+    }
+
+    .music-float:hover {
+      transform: scale(1.05);
+    }
+
+    .music-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 2px;
+      height: 14px;
+    }
+    .music-bars span {
+      width: 3px;
+      height: 5px;
+      background: var(--baby-blue);
+      border-radius: 2px;
+      transition: 0.2s;
+    }
+    .music-playing .music-bars span {
+      animation: eqBar 0.6s infinite alternate;
+    }
+    .music-playing .music-bars span:nth-child(2) { animation-delay: 0.2s; }
+    .music-playing .music-bars span:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes eqBar {
+      from { height: 4px; }
+      to { height: 14px; }
+    }
+
+    /* ==========================================================================
+       5. SECTION UMUM & HERO GIFT BOX
+       ========================================================================== */
+    section {
+      padding: 100px 20px 70px;
+      max-width: 1050px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 45px;
+    }
+
+    .section-tag {
+      display: inline-block;
+      font-size: 0.78rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--baby-blue);
+      background: rgba(162, 210, 255, 0.12);
+      padding: 6px 16px;
+      border-radius: 50px;
+      margin-bottom: 12px;
+      border: 1px solid rgba(162, 210, 255, 0.2);
+    }
+
+    .section-title {
+      font-family: var(--font-serif);
+      font-size: clamp(1.8rem, 4vw, 2.7rem);
+      background: linear-gradient(to right, #ffffff, #a2d2ff, #e2e8f0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 10px;
+    }
+
+    .section-desc {
+      color: var(--silver);
+      max-width: 600px;
+      margin: 0 auto;
+      font-size: 0.95rem;
+    }
+
+    /* Section 1: Opening Gift */
+    #home {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .gift-stage {
+      position: relative;
+      width: 190px;
+      height: 190px;
+      margin: 0 auto 30px;
+      cursor: pointer;
+      animation: floatSlow 4s ease-in-out infinite;
+    }
+
+    .gift-box-body {
+      position: absolute;
+      bottom: 10px;
+      left: 25px;
+      width: 140px;
+      height: 110px;
+      background: linear-gradient(135deg, #1d4ed8, #3b82f6);
+      border-radius: 0 0 14px 14px;
+      box-shadow: 0 15px 35px rgba(29, 78, 216, 0.5);
+    }
+
+    .gift-box-body::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 26px;
+      height: 100%;
+      background: linear-gradient(to right, #e2e8f0, #ffffff, #cbd5e1);
+    }
+
+    .gift-box-lid {
+      position: absolute;
+      top: 42px;
+      left: 17px;
+      width: 156px;
+      height: 32px;
+      background: linear-gradient(135deg, #2563eb, #60a5fa);
+      border-radius: 8px;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+      transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+      z-index: 2;
+    }
+
+    .gift-box-lid::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 26px;
+      height: 100%;
+      background: linear-gradient(to right, #e2e8f0, #ffffff, #cbd5e1);
+    }
+
+    .gift-bow {
+      position: absolute;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 70px;
+      height: 30px;
+      z-index: 1;
+      transition: transform 0.8s ease;
+    }
+    .gift-bow::before, .gift-bow::after {
+      content: '';
+      position: absolute;
+      width: 34px;
+      height: 28px;
+      border: 6px solid #f1f5f9;
+      border-radius: 50% 50% 0 50%;
+      transform: rotate(-15deg);
+    }
+    .gift-bow::after {
+      right: 0;
+      border-radius: 50% 50% 50% 0;
+      transform: rotate(15deg);
+    }
+
+    .gift-stage.opened .gift-box-lid {
+      transform: translateY(-55px) rotate(-18deg);
+    }
+    .gift-stage.opened .gift-bow {
+      transform: translateX(-50%) translateY(-65px) rotate(-18deg);
+    }
+
+    /* ==========================================================================
+       6. HALAMAN HAPPY BIRTHDAY & KUE INTERAKTIF
+       ========================================================================== */
+    .birthday-card {
+      padding: 45px 30px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .bday-main-title {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 5vw, 3.3rem);
+      line-height: 1.2;
+      margin-bottom: 8px;
+      text-shadow: 0 0 25px rgba(162, 210, 255, 0.45);
+    }
+
+    .bday-name {
+      font-family: var(--font-hand);
+      font-size: clamp(2rem, 4.5vw, 3rem);
+      color: var(--baby-blue);
+      margin-bottom: 25px;
+    }
+
+    /* Ilustrasi Kue Ulang Tahun CSS */
+    .cake-container {
+      position: relative;
+      width: 220px;
+      height: 190px;
+      margin: 25px auto 30px;
+    }
+
+    .cake-plate {
+      position: absolute;
+      bottom: 0;
+      left: 10px;
+      width: 200px;
+      height: 14px;
+      background: linear-gradient(to right, #cbd5e1, #ffffff, #94a3b8);
+      border-radius: 50px;
+    }
+
+    .cake-layer-bottom {
+      position: absolute;
+      bottom: 14px;
+      left: 25px;
+      width: 170px;
+      height: 60px;
+      background: linear-gradient(180deg, #60a5fa, #2563eb);
+      border-radius: 14px 14px 6px 6px;
+      box-shadow: inset 0 -8px 0 rgba(15, 23, 42, 0.25);
+    }
+
+    .cake-layer-top {
+      position: absolute;
+      bottom: 74px;
+      left: 45px;
+      width: 130px;
+      height: 48px;
+      background: linear-gradient(180deg, #bae6fd, #38bdf8);
+      border-radius: 14px 14px 4px 4px;
+    }
+
+    .cake-icing {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 16px;
+      background: #ffffff;
+      border-radius: 14px 14px 10px 10px;
+    }
+
+    .candle {
+      position: absolute;
+      bottom: 122px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 14px;
+      height: 42px;
+      background: repeating-linear-gradient(45deg, #ffffff, #ffffff 5px, #93c5fd 5px, #93c5fd 10px);
+      border-radius: 4px;
+    }
+
+    .flame {
+      position: absolute;
+      top: -24px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 16px;
+      height: 24px;
+      background: radial-gradient(circle at 50% 80%, #fffbeb, #fde047 55%, #f97316 100%);
+      border-radius: 50% 50% 50% 50% / 65% 65% 35% 35%;
+      box-shadow: 0 0 20px #fde047, 0 0 40px #fb923c;
+      animation: flicker 0.25s infinite alternate;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+
+    .flame.extinguished {
+      opacity: 0;
+      transform: translateX(-50%) scale(0);
+    }
+
+    @keyframes flicker {
+      0% { transform: translateX(-50%) scale(1) rotate(-2deg); }
+      100% { transform: translateX(-50%) scale(1.07) rotate(2deg); }
+    }
+
+    .bday-controls {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+
+    .btn-outline {
+      background: rgba(162, 210, 255, 0.12);
+      color: var(--white);
+      border: 1px solid var(--baby-blue);
+      padding: 12px 24px;
+      border-radius: 50px;
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn-outline:hover {
+      background: rgba(162, 210, 255, 0.25);
+      box-shadow: var(--glow-blue);
+    }
+
+    .wish-banner {
+      display: none;
+      margin: 0 auto 24px;
+      max-width: 550px;
+      padding: 18px 24px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.3), rgba(162, 210, 255, 0.18));
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      color: var(--ice-blue);
+      font-style: italic;
+      animation: fadeInUp 0.6s ease;
+    }
+
+    .bday-sweet-text {
+      max-width: 680px;
+      margin: 0 auto;
+      color: var(--ice-blue);
+      font-size: 1.02rem;
+      line-height: 1.8;
+    }
+
+    /* ==========================================================================
+       7. GALERI FOTO KENANGAN (POLAROID + SLIDESHOW + LIGHTBOX)
+       ========================================================================== */
+    .slideshow-box {
+      position: relative;
+      max-width: 680px;
+      margin: 0 auto 45px;
+      padding: 18px;
+      text-align: center;
+    }
+
+    .slide-frame {
+      position: relative;
+      width: 100%;
+      height: 360px;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #071326;
+      border: 2px solid rgba(162, 210, 255, 0.35);
+    }
+
+    .slide-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: opacity 0.6s ease;
+    }
+
+    .slide-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(5, 13, 26, 0.65);
+      color: var(--white);
+      border: 1px solid var(--baby-blue);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: 0.3s;
+    }
+    .slide-nav:hover { background: var(--blue-soft); }
+    .slide-prev { left: 12px; }
+    .slide-next { right: 12px; }
+
+    .slide-caption {
+      margin-top: 14px;
+      font-family: var(--font-hand);
+      font-size: 1.5rem;
+      color: var(--baby-blue);
+    }
+
+    /* Grid Polaroid */
+    .polaroid-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 28px;
+    }
+
+    .polaroid-card {
+      background: linear-gradient(180deg, #ffffff 0%, #f0f7ff 100%);
+      color: #0f172a;
+      padding: 14px 14px 24px;
+      border-radius: 12px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.45);
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s;
+    }
+
+    .polaroid-card:nth-child(odd) { transform: rotate(-1.5deg); }
+    .polaroid-card:nth-child(even) { transform: rotate(1.5deg); }
+
+    .polaroid-card:hover {
+      transform: rotate(0deg) translateY(-8px) scale(1.02);
+      box-shadow: 0 20px 40px rgba(74, 144, 226, 0.45);
+      z-index: 5;
+    }
+
+    .polaroid-tape {
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 75px;
+      height: 22px;
+      background: rgba(147, 197, 253, 0.65);
+      backdrop-filter: blur(4px);
+      border-radius: 3px;
+    }
+
+    .polaroid-card img {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      border-radius: 6px;
+      background: #dbeafe;
+    }
+
+    .polaroid-date {
+      font-size: 0.75rem;
+      color: #3b82f6;
+      font-weight: 600;
+      margin-top: 10px;
+      letter-spacing: 1px;
+    }
+
+    .polaroid-caption {
+      font-family: var(--font-hand);
+      font-size: 1.45rem;
+      color: #1e293b;
+      margin-top: 2px;
+      line-height: 1.2;
+    }
+
+    /* ==========================================================================
+       8. VIDEO KENANGAN (MINI CINEMATIC GALLERY)
+       ========================================================================== */
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 26px;
+    }
+
+    .video-card {
+      padding: 16px;
+      transition: 0.4s ease;
+      position: relative;
+    }
+
+    .video-card.playing-glow {
+      border-color: #93c5fd;
+      box-shadow: 0 0 35px rgba(96, 165, 250, 0.65);
+    }
+
+    .video-wrapper {
+      position: relative;
+      border-radius: 14px;
+      overflow: hidden;
+      background: #040b16;
+      aspect-ratio: 16 / 9;
+      border: 1px solid rgba(162, 210, 255, 0.3);
+    }
+
+    .video-wrapper video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .video-poster-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(10, 25, 49, 0.75), rgba(37, 99, 235, 0.45));
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: opacity 0.35s ease;
+    }
+
+    .video-poster-overlay.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .play-circle {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.9);
+      color: var(--navy-mid);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.6);
+      transition: transform 0.3s;
+    }
+
+    .video-poster-overlay:hover .play-circle {
+      transform: scale(1.12);
+    }
+
+    .video-caption {
+      margin-top: 14px;
+      text-align: center;
+      font-size: 0.95rem;
+      color: var(--ice-blue);
+    }
+
+    /* ==========================================================================
+       9. SURAT ULANG TAHUN (AMPLOP INTERAKTIF + EFEK MESIN KETIK)
+       ========================================================================== */
+    .envelope-area {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .envelope-wrapper {
+      width: 320px;
+      height: 210px;
+      background: linear-gradient(135deg, #1e40af, #3b82f6);
+      border-radius: 14px;
+      position: relative;
+      cursor: pointer;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.4s;
+      overflow: hidden;
+      border: 1px solid rgba(191, 219, 254, 0.4);
+    }
+
+    .envelope-wrapper:hover {
+      transform: translateY(-5px);
+    }
+
+    .envelope-flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+      border-left: 160px solid transparent;
+      border-right: 160px solid transparent;
+      border-top: 115px solid #60a5fa;
+      transform-origin: top;
+      transition: transform 0.7s ease;
+      z-index: 3;
+    }
+
+    .envelope-wrapper.open .envelope-flap {
+      transform: rotateX(180deg);
+    }
+
+    .envelope-seal {
+      position: relative;
+      z-index: 4;
+      background: #f8fafc;
+      color: #1d4ed8;
+      padding: 10px 20px;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.88rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+    }
+
+    .letter-paper {
+      display: none;
+      max-width: 740px;
+      width: 100%;
+      margin-top: 30px;
+      background: linear-gradient(180deg, #fffdf9 0%, #f5f7fa 100%);
+      color: #1e293b;
+      padding: 45px 36px;
+      border-radius: 18px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+      border: 2px solid #bfdbfe;
+      position: relative;
+      animation: fadeInUp 0.8s ease;
+    }
+
+    .letter-paper::before {
+      content: '🌸 💙 ✨';
+      position: absolute;
+      top: 16px;
+      right: 22px;
+      font-size: 1.1rem;
+    }
+
+    .letter-heading {
+      font-family: var(--font-serif);
+      color: #1e3a8a;
+      font-size: 1.6rem;
+      margin-bottom: 20px;
+      border-bottom: 1px dashed #93c5fd;
+      padding-bottom: 12px;
+    }
+
+    .letter-body {
+      font-size: 1.03rem;
+      line-height: 1.9;
+      white-space: pre-line;
+      color: #334155;
+      min-height: 220px;
+    }
+
+    .letter-sign {
+      margin-top: 28px;
+      font-family: var(--font-hand);
+      font-size: 1.8rem;
+      color: #1d4ed8;
+      text-align: right;
+    }
+
+    /* ==========================================================================
+       10. VOICE NOTE / PESAN SUARA
+       ========================================================================== */
+    .voice-card {
+      max-width: 560px;
+      margin: 0 auto;
+      padding: 34px 28px;
+      text-align: center;
+    }
+
+    .voice-player-ui {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: rgba(5, 13, 26, 0.6);
+      padding: 16px 20px;
+      border-radius: 50px;
+      border: 1px solid rgba(162, 210, 255, 0.3);
+      margin-top: 22px;
+    }
+
+    .vn-play-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: none;
+      background: linear-gradient(135deg, #2563eb, #60a5fa);
+      color: white;
+      font-size: 1.1rem;
+      cursor: pointer;
+      flex-shrink: 0;
+      box-shadow: var(--glow-blue);
+    }
+
+    .waveform {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex: 1;
+      height: 34px;
+      gap: 3px;
+    }
+
+    .waveform span {
+      flex: 1;
+      height: 8px;
+      background: var(--baby-blue);
+      border-radius: 4px;
+      opacity: 0.45;
+      transition: height 0.2s ease, opacity 0.2s ease;
+    }
+
+    .voice-active .waveform span {
+      opacity: 1;
+      animation: waveBounce 0.7s infinite alternate ease-in-out;
+    }
+
+    .voice-active .waveform span:nth-child(odd) { animation-duration: 0.5s; }
+    .voice-active .waveform span:nth-child(3n) { animation-duration: 0.85s; }
+
+    @keyframes waveBounce {
+      0% { height: 6px; }
+      100% { height: 32px; }
+    }
+
+    .vn-time {
+      font-size: 0.82rem;
+      color: var(--silver);
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* ==========================================================================
+       11. KEJUTAN SATU PER SATU (PROGRESSIVE SURPRISES)
+       ========================================================================== */
+    .surprise-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .surprise-box {
+      padding: 26px 22px;
+      text-align: center;
+      transition: 0.4s;
+      position: relative;
+    }
+
+    .surprise-box.locked-step {
+      opacity: 0.45;
+      pointer-events: none;
+      filter: grayscale(0.5);
+    }
+
+    .surprise-content {
+      display: none;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(162, 210, 255, 0.2);
+      color: var(--ice-blue);
+      font-size: 0.95rem;
+      animation: fadeInUp 0.6s ease;
+    }
+
+    /* ==========================================================================
+       12. DOA DAN HARAPAN
+       ========================================================================== */
+    .wishes-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 18px;
+    }
+
+    .wish-item {
+      padding: 22px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .wish-item.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .wish-icon {
+      font-size: 1.5rem;
+      background: rgba(162, 210, 255, 0.15);
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    /* ==========================================================================
+       13. FINAL SURPRISE & MODAL LIGHTBOX
+       ========================================================================== */
+    #surprise {
+      text-align: center;
+      padding-bottom: 120px;
+    }
+
+    .final-card {
+      padding: 55px 28px;
+      background: linear-gradient(160deg, rgba(15, 35, 68, 0.7), rgba(5, 13, 26, 0.85));
+      border: 1px solid rgba(162, 210, 255, 0.4);
+      box-shadow: 0 0 50px rgba(37, 99, 235, 0.3);
+    }
+
+    .final-headline {
+      font-family: var(--font-serif);
+      font-size: clamp(1.7rem, 4vw, 2.6rem);
+      margin-bottom: 24px;
+      color: var(--white);
+    }
+
+    .final-message-box {
+      display: none;
+      max-width: 680px;
+      margin: 30px auto 0;
+      padding: 30px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(162, 210, 255, 0.3);
+      font-size: 1.05rem;
+      line-height: 1.9;
+      color: var(--ice-blue);
+      animation: fadeInUp 0.9s ease;
+    }
+
+    /* Modal Lightbox untuk Foto */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 9500;
+      background: rgba(3, 8, 18, 0.88);
+      backdrop-filter: blur(10px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-content {
+      max-width: 520px;
+      width: 100%;
+      background: #ffffff;
+      color: #0f172a;
+      padding: 16px 16px 26px;
+      border-radius: 16px;
+      text-align: center;
+      position: relative;
+      animation: zoomIn 0.35s ease;
+    }
+
+    .modal-content img {
+      width: 100%;
+      max-height: 65vh;
+      object-fit: contain;
+      border-radius: 10px;
+      background: #0f172a;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: -14px;
+      right: -14px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: none;
+      background: #2563eb;
+      color: white;
+      font-size: 1.1rem;
+      cursor: pointer;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes zoomIn {
+      from { opacity: 0; transform: scale(0.85); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    /* Partikel Efek Klik (Confetti / Bunga / Hati) */
+    .floating-burst {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      font-size: 1.4rem;
+      animation: burstFly 1.6s ease-out forwards;
+    }
+
+    @keyframes burstFly {
+      0% { opacity: 1; transform: translate(0, 0) scale(0.6); }
+      100% { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(1.3) rotate(45deg); }
+    }
+
+    /* Responsif HP */
+    @media (max-width: 600px) {
+      section { padding: 85px 16px 50px; }
+      .letter-paper { padding: 30px 20px; }
+      .slide-frame { height: 240px; }
+      .envelope-wrapper { width: 280px; height: 185px; }
+      .envelope-flap { border-left-width: 140px; border-right-width: 140px; border-top-width: 100px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Langit Malam, Bulan & Awan -->
+  <canvas id="ambient-canvas"></canvas>
+  <div class="moon-glow"></div>
+  <div class="cloud cloud-1"></div>
+  <div class="cloud cloud-2"></div>
+
+  <!-- Audio Latar Belakang (EDIT FILE LAGU DI SINI JIKA NAMA FILE BERBEDA) -->
+  <audio id="bg-music" loop>
+    <source src="music.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- ========================================================================
+       1. HALAMAN PASSWORD / KUNCI MASUK
+       ======================================================================== -->
+  <div id="lock-screen">
+    <div class="glass-card lock-box" id="lock-box">
+      <div class="lock-icon-wrap">🔒💙</div>
+      <h1 class="lock-title">This little surprise is only for you 💙</h1>
+      <p class="lock-subtitle">Masukkan tanggal lahirmu untuk membuka hadiah ini.</p>
+      
+      <input 
+        type="password" 
+        id="password-input" 
+        class="pass-input" 
+        placeholder="••••••••" 
+        maxlength="12"
+        inputmode="numeric"
+      />
+      <br />
+      <button class="btn-primary" onclick="checkPassword()">
+        <span>Unlock My Surprise</span> ✨
+      </button>
+      <p class="error-msg" id="error-msg"></p>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       2. ANIMASI LOADING TRANSISI
+       ======================================================================== -->
+  <div id="loading-overlay">
+    <div class="spinner-ring"></div>
+    <p style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--baby-blue);">
+      Preparing your special day... 💙
+    </p>
+  </div>
+
+  <!-- ========================================================================
+       3. KONTEN UTAMA WEBSITE
+       ======================================================================== -->
+  <div id="main-wrapper">
+    
+    <!-- Navigasi Minimalis -->
+    <nav class="navbar">
+      <a href="#home">Home</a>
+      <a href="#birthday">Birthday</a>
+      <a href="#photos">Photos</a>
+      <a href="#videos">Videos</a>
+      <a href="#letter">Letter</a>
+      <a href="#voice">Voice</a>
+      <a href="#wishes">Wishes</a>
+      <a href="#surprise">Surprise</a>
+    </nav>
+
+    <!-- Tombol Musik Mengambang -->
+    <button class="music-float" id="music-toggle" onclick="toggleMusic()">
+      <div class="music-bars">
+        <span></span><span></span><span></span>
+      </div>
+      <span id="music-label">Play Music</span>
+    </button>
+
+    <!-- SECTION: HALAMAN PEMBUKA (GIFT BOX) -->
+    <section id="home">
+      <div class="gift-stage" id="gift-stage" onclick="openGiftBox(event)">
+        <div class="gift-bow"></div>
+        <div class="gift-box-lid"></div>
+        <div class="gift-box-body"></div>
+      </div>
+      <span class="section-tag">Special Digital Gift 💙</span>
+      <h2 class="section-title">A little surprise made just for you.</h2>
+      <p class="section-desc" style="margin-bottom: 26px;">
+        Are you ready to open your birthday gift?
+      </p>
+      <button class="btn-primary" onclick="openGiftBox(event)">
+        🎁 OPEN YOUR GIFT
+      </button>
+    </section>
+
+    <!-- SECTION: HALAMAN HAPPY BIRTHDAY -->
+    <section id="birthday">
+      <div class="glass-card birthday-card">
+        <span class="section-tag">Celebrate Today ✨</span>
+        <h1 class="bday-main-title">HAPPY BIRTHDAY, MY FAVORITE PERSON!</h1>
+        
+        <!-- ================================================================
+             EDIT DI SINI: Ganti nama cowok kamu di bawah ini
+             ================================================================ -->
+        <div class="bday-name" id="display-name">Untuk Kamu yang Paling Spesial 💙</div>
+
+        <!-- Ilustrasi Kue Ulang Tahun dengan Lilin -->
+        <div class="cake-container">
+          <div class="candle">
+            <div class="flame" id="candle-flame"></div>
+          </div>
+          <div class="cake-layer-top">
+            <div class="cake-icing"></div>
+          </div>
+          <div class="cake-layer-bottom">
+            <div class="cake-icing"></div>
+          </div>
+          <div class="cake-plate"></div>
+        </div>
+
+        <div class="bday-controls">
+          <button class="btn-outline" onclick="toggleCandle()" id="candle-btn">
+            🕯️ Tiup / Matikan Lilin
+          </button>
+          <button class="btn-primary" onclick="makeAWish(event)">
+            🌠 Make a Wish
+          </button>
+        </div>
+
+        <div class="wish-banner" id="wish-banner">
+          "Semoga semua hal baik yang diam-diam kamu doakan di dalam hati, satu per satu Tuhan wujudkan di tahun ini. Aamiin 💙✨"
+        </div>
+
+        <!-- ================================================================
+             EDIT DI SINI: Ucapan ulang tahun singkat di bawah kue
+             ================================================================ -->
+        <p class="bday-sweet-text">
+          Selamat bertambah usia, ya. Terima kasih sudah bertahan sejauh ini, sudah bekerja keras, dan sudah menjadi sosok yang begitu hangat. Hari ini bukan cuma soal angka yang bertambah, tapi soal merayakan betapa berharganya kehadiranmu di dunia ini. Semoga hari ini dan hari-hari berikutnya selalu dipenuhi alasan untuk tersenyum.
+        </p>
+      </div>
+    </section>
+
+    <!-- SECTION: GALERI FOTO KENANGAN -->
+    <section id="photos">
+      <div class="section-header">
+        <span class="section-tag">Captured Moments 📸</span>
+        <h2 class="section-title">Galeri Foto Kenangan</h2>
+        <p class="section-desc">Setiap foto punya ceritanya sendiri, dan aku bersyukur bisa menyimpan momen-momen ini.</p>
+      </div>
+
+      <!-- Slideshow Otomatis + Manual -->
+      <div class="glass-card slideshow-box">
+        <div class="slide-frame">
+          <img id="slide-img" src="photos/foto1.jpg" alt="Kenangan Indah" onerror="this.src='https://placehold.co/800x500/0a1931/a2d2ff?text=Letakkan+foto1.jpg+di+folder+photos'">
+          <button class="slide-nav slide-prev" onclick="changeSlide(-1)">❮</button>
+          <button class="slide-nav slide-next" onclick="changeSlide(1)">❯</button>
+        </div>
+        <div class="slide-caption" id="slide-caption">Momen favoritku bersamamu 💙</div>
+      </div>
+
+      <!-- ==================================================================
+           EDIT DI SINI: Ganti file foto (photos/foto1.jpg dst), tanggal, dan caption.
+           Kamu juga bisa menyalin blok <div class="polaroid-card"> jika ingin menambah lebih banyak foto.
+           ================================================================== -->
+      <div class="polaroid-grid" id="polaroid-grid">
+        
+        <!-- FOTO 1 -->
+        <div class="polaroid-card" onclick="openLightbox('photos/foto1.jpg', 'Awal dari banyak cerita indah kita 💙')">
+          <div class="polaroid-tape"></div>
+          <img src="photos/foto1.jpg" alt="Foto 1" onerror="this.src='https://placehold.co/400x400/dbeafe/1e3a8a?text=photos/foto1.jpg'">
+          <div class="polaroid-date">📅 KENANGAN #01</div>
+          <div class="polaroid-caption">Awal dari banyak cerita indah kita 💙</div>
+        </div>
+
+        <!-- FOTO 2 -->
+        <div class="polaroid-card" onclick="openLightbox('photos/foto2.jpg', 'Senyum yang selalu bikin hari terasa lebih tenang')">
+          <div class="polaroid-tape"></div>
+          <img src="photos/foto2.jpg" alt="Foto 2" onerror="this.src='https://placehold.co/400x400/dbeafe/1e3a8a?text=photos/foto2.jpg'">
+          <div class="polaroid-date">📅 KENANGAN #02</div>
+          <div class="polaroid-caption">Senyum yang selalu bikin hari terasa lebih tenang</div>
+        </div>
+
+        <!-- FOTO 3 -->
+        <div class="polaroid-card" onclick="openLightbox('photos/foto3.jpg', 'Hari sederhana yang rasanya nggak mau cepat selesai')">
+          <div class="polaroid-tape"></div>
+          <img src="photos/foto3.jpg" alt="Foto 3" onerror="this.src='https://placehold.co/400x400/dbeafe/1e3a8a?text=photos/foto3.jpg'">
+          <div class="polaroid-date">📅 KENANGAN #03</div>
+          <div class="polaroid-caption">Hari sederhana yang rasanya nggak mau cepat selesai</div>
+        </div>
+
+        <!-- FOTO 4 -->
+        <div class="polaroid-card" onclick="openLightbox('photos/foto4.jpg', 'Salah satu versi terbaik dari hari-hariku')">
+          <div class="polaroid-tape"></div>
+          <img src="photos/foto4.jpg" alt="Foto 4" onerror="this.src='https://placehold.co/400x400/dbeafe/1e3a8a?text=photos/foto4.jpg'">
+          <div class="polaroid-date">📅 KENANGAN #04</div>
+          <div class="polaroid-caption">Salah satu versi terbaik dari hari-hariku</div>
+        </div>
+
+        <!-- FOTO 5 -->
+        <div class="polaroid-card" onclick="openLightbox('photos/foto5.jpg', 'Tawa lepas yang selalu aku rindukan')">
+          <div class="polaroid-tape"></div>
+          <img src="photos/foto5.jpg" alt="Foto 5" onerror="this.src='https://placehold.co/400x400/dbeafe/1e3a8a?text=photos/foto5.jpg'">
+          <div class="polaroid-date">📅 KENANGAN #05</div>
+          <div class="polaroid-caption">Tawa lepas yang selalu aku rindukan</div>
+        </div>
+
+        <!-- FOTO 6 -->
+        <div class="polaroid-card" onclick="openLightbox('photos/foto6.jpg', 'Semoga masih banyak foto baru setelah ini ✨')">
+          <div class="polaroid-tape"></div>
+          <img src="photos/foto6.jpg" alt="Foto 6" onerror="this.src='https://placehold.co/400x400/dbeafe/1e3a8a?text=photos/foto6.jpg'">
+          <div class="polaroid-date">📅 KENANGAN #06</div>
+          <div class="polaroid-caption">Semoga masih banyak foto baru setelah ini ✨</div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION: VIDEO KENANGAN -->
+    <section id="videos">
+      <div class="section-header">
+        <span class="section-tag">Mini Cinema 🎬</span>
+        <h2 class="section-title">Our Little Memories</h2>
+        <p class="section-desc">Potongan-potongan kecil yang bergerak, tapi rasanya selalu hangat setiap kali diputar ulang.</p>
+      </div>
+
+      <!-- ==================================================================
+           EDIT DI SINI: Ganti file video di folder videos/ (kenangan1.mp4 dst),
+           thumbnail (poster), dan caption di bawah masing-masing video.
+           ================================================================== -->
+      <div class="video-grid">
+        
+        <!-- VIDEO 1 -->
+        <div class="glass-card video-card" id="vcard-1">
+          <div class="video-wrapper">
+            <video id="vid-1" controls playsinline poster="photos/foto1.jpg" onplay="onVideoPlay(1)" onpause="onVideoPause(1)" onended="onVideoPause(1)">
+              <source src="videos/kenangan1.mp4" type="video/mp4">
+            </video>
+            <div class="video-poster-overlay" id="overlay-1" onclick="playCustomVideo(1)">
+              <div class="play-circle">▶</div>
+              <span style="margin-top: 10px; font-size: 0.85rem; color: #e0f2fe;">Putar Kenangan #1</span>
+            </div>
+          </div>
+          <p class="video-caption">Momen kecil yang selalu bikin senyum sendiri 💙</p>
+        </div>
+
+        <!-- VIDEO 2 -->
+        <div class="glass-card video-card" id="vcard-2">
+          <div class="video-wrapper">
+            <video id="vid-2" controls playsinline poster="photos/foto2.jpg" onplay="onVideoPlay(2)" onpause="onVideoPause(2)" onended="onVideoPause(2)">
+              <source src="videos/kenangan2.mp4" type="video/mp4">
+            </video>
+            <div class="video-poster-overlay" id="overlay-2" onclick="playCustomVideo(2)">
+              <div class="play-circle">▶</div>
+              <span style="margin-top: 10px; font-size: 0.85rem; color: #e0f2fe;">Putar Kenangan #2</span>
+            </div>
+          </div>
+          <p class="video-caption">Tentang hari yang penuh tawa dan cerita seru ✨</p>
+        </div>
+
+        <!-- VIDEO 3 -->
+        <div class="glass-card video-card" id="vcard-3">
+          <div class="video-wrapper">
+            <video id="vid-3" controls playsinline poster="photos/foto3.jpg" onplay="onVideoPlay(3)" onpause="onVideoPause(3)" onended="onVideoPause(3)">
+              <source src="videos/kenangan3.mp4" type="video/mp4">
+            </video>
+            <div class="video-poster-overlay" id="overlay-3" onclick="playCustomVideo(3)">
+              <div class="play-circle">▶</div>
+              <span style="margin-top: 10px; font-size: 0.85rem; color: #e0f2fe;">Putar Kenangan #3</span>
+            </div>
+          </div>
+          <p class="video-caption">Terima kasih sudah jadi bagian dari perjalanan ini 🌙</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION: SURAT ULANG TAHUN -->
+    <section id="letter">
+      <div class="section-header">
+        <span class="section-tag">From My Heart 💌</span>
+        <h2 class="section-title">A Letter For You</h2>
+        <p class="section-desc">Klik amplop biru di bawah ini untuk membaca surat kecil yang aku tulis khusus buat kamu.</p>
+      </div>
+
+      <div class="envelope-area">
+        <div class="envelope-wrapper" id="envelope" onclick="openEnvelope()">
+          <div class="envelope-flap"></div>
+          <div class="envelope-seal">💙 Klik untuk Buka Surat</div>
+        </div>
+
+        <div class="letter-paper" id="letter-paper">
+          <h3 class="letter-heading">Selamat Ulang Tahun, Kamu 💙</h3>
+          <div class="letter-body" id="typewriter-letter"></div>
+          <!-- ==============================================================
+               EDIT DI SINI: Ganti nama pengirim surat di bawah ini
+               ============================================================== -->
+          <div class="letter-sign">Dengan penuh kasih, dari seseorang yang selalu mendoakanmu 💙</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: VOICE NOTE / PESAN SUARA -->
+    <section id="voice">
+      <div class="section-header">
+        <span class="section-tag">Audio Message 🎙️</span>
+        <h2 class="section-title">Listen to this little message</h2>
+        <p class="section-desc">Ada beberapa hal yang rasanya lebih hangat kalau disampaikan langsung lewat suara.</p>
+      </div>
+
+      <div class="glass-card voice-card" id="voice-card">
+        <p style="color: var(--baby-blue); font-size: 0.95rem;">
+          🎧 Gunakan earphone atau naikkan volume sedikit ya...
+        </p>
+
+        <!-- ================================================================
+             EDIT DI SINI: Pastikan file rekaman suara bernama "voice-note.mp3"
+             berada satu folder dengan file index.html ini.
+             ================================================================ -->
+        <audio id="voice-audio" src="voice-note.mp3" ontimeupdate="updateVoiceTime()" onended="resetVoiceUI()"></audio>
+
+        <div class="voice-player-ui">
+          <button class="vn-play-btn" id="vn-btn" onclick="toggleVoiceNote()">▶</button>
+          <div class="waveform" id="waveform">
+            <span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <span class="vn-time" id="vn-time">00:00</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: KEJUTAN YANG DIBUKA SATU PER SATU -->
+    <section id="progressive-surprises">
+      <div class="section-header">
+        <span class="section-tag">Little Secrets ✨</span>
+        <h2 class="section-title">Buka Kejutan Satu per Satu</h2>
+        <p class="section-desc">Jangan buru-buru, buka satu per satu dari nomor 1 untuk membuka kejutan berikutnya ya!</p>
+      </div>
+
+      <!-- ==================================================================
+           EDIT DI SINI: Kamu bisa mengubah teks kejutan di dalam <div class="surprise-content">
+           ================================================================== -->
+      <div class="surprise-grid">
+        
+        <!-- KEJUTAN 1 -->
+        <div class="glass-card surprise-box" id="sbox-1">
+          <button class="btn-primary" onclick="revealSurprise(1, event)">
+            1. There's something for you... 💌
+          </button>
+          <div class="surprise-content" id="scontent-1">
+            💙 <strong>Fakta Kecil:</strong> Kamu adalah salah satu alasan kenapa hari-hari biasa bisa terasa jauh lebih berarti dan menyenangkan.
+          </div>
+        </div>
+
+        <!-- KEJUTAN 2 -->
+        <div class="glass-card surprise-box locked-step" id="sbox-2">
+          <button class="btn-primary" onclick="revealSurprise(2, event)">
+            2. Open another surprise 🌸
+          </button>
+          <div class="surprise-content" id="scontent-2">
+            🌸 <strong>Pengingat Buat Kamu:</strong> Kalau lagi capek atau ngerasa berat, jangan lupa istirahat ya. Kamu nggak harus selalu kuat sendirian.
+          </div>
+        </div>
+
+        <!-- KEJUTAN 3 -->
+        <div class="glass-card surprise-box locked-step" id="sbox-3">
+          <button class="btn-primary" onclick="revealSurprise(3, event)">
+            3. One more little thing ✨
+          </button>
+          <div class="surprise-content" id="scontent-3">
+            ✨ <strong>Apresiasi Kecil:</strong> Terima kasih sudah selalu berusaha melakukan yang terbaik, bahkan untuk hal-hal kecil yang sering nggak terlihat orang lain.
+          </div>
+        </div>
+
+        <!-- KEJUTAN 4 -->
+        <div class="glass-card surprise-box locked-step" id="sbox-4">
+          <button class="btn-primary" onclick="revealSurprise(4, event)">
+            4. Click if you're curious 🌙
+          </button>
+          <div class="surprise-content" id="scontent-4">
+            🌙 <strong>Voucher Spesial:</strong> Screenshot bagian ini! Kamu punya 1x voucher bebas request makanan favorit atau jalan santai kapan pun kamu mau.
+          </div>
+        </div>
+
+        <!-- KEJUTAN 5 -->
+        <div class="glass-card surprise-box locked-step" id="sbox-5">
+          <button class="btn-primary" onclick="revealSurprise(5, event)">
+            5. A secret message 🤍
+          </button>
+          <div class="surprise-content" id="scontent-5">
+            🤍 <strong>Rahasia:</strong> Dari sekian banyak orang di dunia ini, aku bersyukur banget bisa kenal dan punya cerita sama kamu.
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION: DOA DAN HARAPAN -->
+    <section id="wishes">
+      <div class="section-header">
+        <span class="section-tag">Prayers & Hopes 🌙</span>
+        <h2 class="section-title">Doa & Harapan Terbaik Untukmu</h2>
+        <p class="section-desc">Di bawah langit biru malam ini, ada banyak doa baik yang diam-diam aku langitkan untukmu.</p>
+      </div>
+
+      <div class="wishes-list">
+        <div class="glass-card wish-item">
+          <div class="wish-icon">🩺</div>
+          <div>
+            <h4 style="color: var(--baby-blue); margin-bottom: 4px;">Kesehatan yang Selalu Terjaga</h4>
+            <p style="font-size: 0.9rem; color: var(--silver);">Semoga tubuh dan pikiranmu selalu diberi kesehatan, kekuatan, dan dijauhkan dari segala hal yang melelahkan.</p>
+          </div>
+        </div>
+
+        <div class="glass-card wish-item">
+          <div class="wish-icon">😊</div>
+          <div>
+            <h4 style="color: var(--baby-blue); margin-bottom: 4px;">Kebahagiaan yang Tulus</h4>
+            <p style="font-size: 0.9rem; color: var(--silver);">Semoga selalu ada hal-hal sederhana yang membuatmu tertawa lepas dan merasa cukup.</p>
+          </div>
+        </div>
+
+        <div class="glass-card wish-item">
+          <div class="wish-icon">🚀</div>
+          <div>
+            <h4 style="color: var(--baby-blue); margin-bottom: 4px;">Kesuksesan & Kelancaran Rezeki</h4>
+            <p style="font-size: 0.9rem; color: var(--silver);">Semoga setiap langkah, usaha, dan kerja kerasmu dimudahkan jalannya dan dilapangkan rezekinya.</p>
+          </div>
+        </div>
+
+        <div class="glass-card wish-item">
+          <div class="wish-icon">🕊️</div>
+          <div>
+            <h4 style="color: var(--baby-blue); margin-bottom: 4px;">Ketenangan Hati</h4>
+            <p style="font-size: 0.9rem; color: var(--silver);">Semoga hatimu selalu tenang menghadapi apa pun, dan selalu diberi kebijaksanaan dalam setiap keputusan.</p>
+          </div>
+        </div>
+
+        <div class="glass-card wish-item">
+          <div class="wish-icon">🌟</div>
+          <div>
+            <h4 style="color: var(--baby-blue); margin-bottom: 4px;">Umur yang Berkah & Masa Depan Baik</h4>
+            <p style="font-size: 0.9rem; color: var(--silver);">Semoga sisa usiamu penuh keberkahan dan membawamu menuju masa depan yang cerah.</p>
+          </div>
+        </div>
+
+        <div class="glass-card wish-item">
+          <div class="wish-icon">🤝</div>
+          <div>
+            <h4 style="color: var(--baby-blue); margin-bottom: 4px;">Impian Terwujud & Dikelilingi Orang Baik</h4>
+            <p style="font-size: 0.9rem; color: var(--silver);">Semoga cita-citamu satu per satu tercapai, dan kamu selalu dikelilingi orang-orang yang tulus menyayangimu.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: FINAL SURPRISE -->
+    <section id="surprise">
+      <div class="glass-card final-card">
+        <span class="section-tag">The Last Chapter 💙</span>
+        <h2 class="final-headline">
+          Happy Birthday, You Deserve All the Beautiful Things in This World 💙
+        </h2>
+        <p class="section-desc" style="margin-bottom: 28px;">
+          Terima kasih sudah membuka setiap bagian dari hadiah kecil ini sampai halaman terakhir.
+        </p>
+
+        <button class="btn-primary" onclick="openFinalSurprise(event)">
+          ✨ Open Your Last Surprise
+        </button>
+
+        <div class="final-message-box" id="final-message-box">
+          <p id="final-typing-text"></p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Modal Lightbox untuk Perbesar Foto -->
+  <div class="modal-overlay" id="photo-modal" onclick="closeLightbox()">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeLightbox()">✕</button>
+      <img id="modal-img" src="" alt="Preview Foto">
+      <p id="modal-caption" style="font-family: var(--font-hand); font-size: 1.5rem; margin-top: 12px; color: #1e3a8a;"></p>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       JAVASCRIPT LENGKAP
+       ======================================================================== -->
+  <script>
+    /* ========================================================================
+       1. PENGATURAN UTAMA (EDIT DI SINI)
+       ======================================================================== */
+    
+    // EDIT DI SINI: Password tanggal lahir (contoh: "17082008")
+    const SECRET_PASSWORD = "23112008";
+
+    // EDIT DI SINI: Daftar foto dan caption untuk slideshow otomatis di atas galeri
+    const slideshowData = [
+      { src: "photos/foto1.jpg", caption: "Awal dari banyak cerita indah kita 💙" },
+      { src: "photos/foto2.jpg", caption: "Senyum yang selalu bikin hari terasa lebih tenang ✨" },
+      { src: "photos/foto3.jpg", caption: "Hari sederhana yang rasanya nggak mau cepat selesai 🌙" },
+      { src: "photos/foto4.jpg", caption: "Salah satu versi terbaik dari hari-hariku 📸" },
+      { src: "photos/foto5.jpg", caption: "Tawa lepas yang selalu aku rindukan 💙" },
+      { src: "photos/foto6.jpg", caption: "Semoga masih banyak foto baru setelah ini 🌸" }
+    ];
+
+    // EDIT DI SINI: Isi surat ulang tahun (gunakan \n untuk baris baru)
+    const fullLetterText = `Hai, selamat ulang tahun ya.
+
+Nggak kerasa waktu jalan begitu cepat, dan hari ini kamu kembali bertambah usia. Lewat halaman kecil ini, aku cuma pengen bilang terima kasih banyak—terima kasih sudah hadir, sudah bertahan melewati hari-hari yang nggak selalu mudah, dan sudah jadi pribadi yang begitu hangat.
+
+Aku tahu mungkin ada banyak hal yang selama ini kamu simpan sendiri, banyak lelah yang nggak kamu ceritakan, dan banyak rencana besar yang lagi kamu perjuangkan diam-diam. Aku bangga banget sama kamu, sama prosesmu, dan sama cara kamu tetap berusaha jadi versi terbaik dari dirimu sendiri.
+
+Di usia yang baru ini, aku berdoa semoga Tuhan selalu jaga langkahmu. Semoga apa pun yang lagi kamu semogakan segera menemukan jalan terbaiknya. Jangan lupa untuk selalu jaga kesehatan, jangan terlalu keras sama diri sendiri, dan ingat kalau kamu selalu pantas mendapatkan kebahagiaan yang utuh.
+
+Selamat merayakan harimu hari ini. Semoga tahun ini jadi babak yang penuh kabar baik buat kamu. 💙`;
+
+    // EDIT DI SINI: Pesan terakhir yang menyentuh di bagian Final Surprise
+    const finalSurpriseText = `Kalau suatu hari kamu merasa lelah, ragu sama diri sendiri, atau ngerasa dunia lagi berjalan terlalu cepat, tolong buka lagi halaman ini ya. Ingat bahwa di dunia ini ada seseorang yang benar-benar bersyukur kamu pernah dilahirkan, seseorang yang selalu mendoakan kebaikanmu dari jauh maupun dekat, dan seseorang yang percaya kamu bakal tumbuh jadi sosok hebat. Selamat ulang tahun sekali lagi. Tetap jadi kamu yang baik hati, hangat, dan selalu bersinar dengan caramu sendiri. 💙✨`;
+
+    /* ========================================================================
+       2. LOGIKA PASSWORD & SUARA LEMBUT
+       ======================================================================== */
+    const wrongMessages = [
+      "Eits, kayaknya bukan tanggal itu deh... coba inget-inget lagi tanggal lahirmu 💙",
+      "Hampir! Coba ketik tanggal lahirmu dengan teliti ya ganteng ✨",
+      "Masa tanggal lahir sendiri lupa sih? Coba lagi pelan-pelan ya 😊",
+      "Belum kebuka nih kuncinya, ayo coba masukkan tanggal lahirmu lagi 💙"
+    ];
+    let wrongCount = 0;
+
+    // Enter key support pada input password
+    document.getElementById("password-input").addEventListener("keypress", function(e) {
+      if (e.key === "Enter") checkPassword();
+    });
+
+    function playUnlockChime() {
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+        notes.forEach((freq, i) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = "sine";
+          osc.frequency.setValueAtTime(freq, ctx.currentTime + i * 0.12);
+          gain.gain.setValueAtTime(0.12, ctx.currentTime + i * 0.12);
+          gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + i * 0.12 + 0.6);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(ctx.currentTime + i * 0.12);
+          osc.stop(ctx.currentTime + i * 0.12 + 0.65);
+        });
+      } catch (e) {}
+    }
+
+    function checkPassword() {
+      const input = document.getElementById("password-input").value.trim();
+      const lockBox = document.getElementById("lock-box");
+      const errorMsg = document.getElementById("error-msg");
+
+      if (input === SECRET_PASSWORD) {
+        playUnlockChime();
+        errorMsg.textContent = "";
+        document.getElementById("lock-screen").classList.add("unlocked");
+        
+        // Tampilkan loading transisi
+        const loader = document.getElementById("loading-overlay");
+        loader.style.display = "flex";
+
+        // Mulai musik otomatis setelah interaksi klik user
+        startBgMusic();
+
+        setTimeout(() => {
+          loader.style.display = "none";
+          document.getElementById("main-wrapper").style.display = "block";
+          spawnBurst(window.innerWidth / 2, window.innerHeight / 2);
+        }, 2000);
+      } else {
+        lockBox.classList.remove("shake");
+        void lockBox.offsetWidth; // trigger reflow
+        lockBox.classList.add("shake");
+        errorMsg.textContent = wrongMessages[wrongCount % wrongMessages.length];
+        wrongCount++;
+      }
+    }
+
+    /* ========================================================================
+       3. MUSIK LATAR BELAKANG
+       ======================================================================== */
+    const bgMusic = document.getElementById("bg-music");
+    const musicToggle = document.getElementById("music-toggle");
+    const musicLabel = document.getElementById("music-label");
+    let isMusicPlaying = false;
+
+    function startBgMusic() {
+      bgMusic.volume = 0.45;
+      bgMusic.play().then(() => {
+        isMusicPlaying = true;
+        musicToggle.classList.add("music-playing");
+        musicLabel.textContent = "Music On";
+      }).catch(() => {
+        isMusicPlaying = false;
+        musicLabel.textContent = "Play Music";
+      });
+    }
+
+    function toggleMusic() {
+      if (isMusicPlaying) {
+        bgMusic.pause();
+        isMusicPlaying = false;
+        musicToggle.classList.remove("music-playing");
+        musicLabel.textContent = "Play Music";
+      } else {
+        startBgMusic();
+      }
+    }
+
+    /* ========================================================================
+       4. ANIMASI PARTIKEL BINTANG & BUNGA / CONFETTI BURST
+       ======================================================================== */
+    const canvas = document.getElementById("ambient-canvas");
+    const ctx = canvas.getContext("2d");
+    let stars = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    for (let i = 0; i < 110; i++) {
+      stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 1.8 + 0.4,
+        alpha: Math.random(),
+        speed: Math.random() * 0.015 + 0.005
+      });
+    }
+
+    function animateStars() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      stars.forEach(s => {
+        s.alpha += s.speed;
+        if (s.alpha > 1 || s.alpha < 0.15) s.speed = -s.speed;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(219, 234, 254, ${s.alpha})`;
+        ctx.fill();
+      });
+      requestAnimationFrame(animateStars);
+    }
+    animateStars();
+
+    function spawnBurst(x, y) {
+      const icons = ["💙", "✨", "🌸", "🤍", "❄️", "🎉"];
+      for (let i = 0; i < 22; i++) {
+        const el = document.createElement("div");
+        el.className = "floating-burst";
+        el.textContent = icons[Math.floor(Math.random() * icons.length)];
+        el.style.left = x + "px";
+        el.style.top = y + "px";
+        const angle = Math.random() * Math.PI * 2;
+        const dist = 70 + Math.random() * 160;
+        el.style.setProperty("--tx", Math.cos(angle) * dist + "px");
+        el.style.setProperty("--ty", Math.sin(angle) * dist - 40 + "px");
+        document.body.appendChild(el);
+        setTimeout(() => el.remove(), 1600);
+      }
+    }
+
+    /* ========================================================================
+       5. INTERAKSI KOTAK HADIAH & KUE ULANG TAHUN
+       ======================================================================== */
+    function openGiftBox(e) {
+      const stage = document.getElementById("gift-stage");
+      stage.classList.add("opened");
+      spawnBurst(e.clientX || window.innerWidth / 2, e.clientY || window.innerHeight / 2);
+      setTimeout(() => {
+        document.getElementById("birthday").scrollIntoView({ behavior: "smooth" });
+      }, 950);
+    }
+
+    let candleLit = true;
+    function toggleCandle() {
+      const flame = document.getElementById("candle-flame");
+      const btn = document.getElementById("candle-btn");
+      candleLit = !candleLit;
+      if (candleLit) {
+        flame.classList.remove("extinguished");
+        btn.textContent = "🕯️ Tiup / Matikan Lilin";
+      } else {
+        flame.classList.add("extinguished");
+        btn.textContent = "🔥 Nyalakan Lilin Lagi";
+        spawnBurst(window.innerWidth / 2, window.innerHeight / 2);
+      }
+    }
+
+    function makeAWish(e) {
+      const banner = document.getElementById("wish-banner");
+      banner.style.display = "block";
+      spawnBurst(e.clientX, e.clientY);
+    }
+
+    /* ========================================================================
+       6. SLIDESHOW & LIGHTBOX FOTO
+       ======================================================================== */
+    let currentSlide = 0;
+    function showSlide(index) {
+      currentSlide = (index + slideshowData.length) % slideshowData.length;
+      const img = document.getElementById("slide-img");
+      const cap = document.getElementById("slide-caption");
+      img.style.opacity = 0;
+      setTimeout(() => {
+        img.src = slideshowData[currentSlide].src;
+        cap.textContent = slideshowData[currentSlide].caption;
+        img.style.opacity = 1;
+      }, 250);
+    }
+
+    function changeSlide(step) {
+      showSlide(currentSlide + step);
+    }
+
+    setInterval(() => {
+      if (document.getElementById("main-wrapper").style.display === "block") {
+        changeSlide(1);
+      }
+    }, 4500);
+
+    function openLightbox(src, caption) {
+      const modal = document.getElementById("photo-modal");
+      document.getElementById("modal-img").src = src;
+      document.getElementById("modal-caption").textContent = caption;
+      modal.style.display = "flex";
+    }
+
+    function closeLightbox() {
+      document.getElementById("photo-modal").style.display = "none";
+    }
+
+    /* ========================================================================
+       7. VIDEO KENANGAN
+       ======================================================================== */
+    function playCustomVideo(num) {
+      const video = document.getElementById("vid-" + num);
+      const overlay = document.getElementById("overlay-" + num);
+      overlay.classList.add("hidden");
+      video.play();
+    }
+
+    function onVideoPlay(num) {
+      document.getElementById("vcard-" + num).classList.add("playing-glow");
+      document.getElementById("overlay-" + num).classList.add("hidden");
+      if (isMusicPlaying) bgMusic.pause(); // Kecilkan/jeda musik saat video diputar
+    }
+
+    function onVideoPause(num) {
+      document.getElementById("vcard-" + num).classList.remove("playing-glow");
+      if (isMusicPlaying) bgMusic.play();
+    }
+
+    /* ========================================================================
+       8. SURAT ULANG TAHUN (EFEK MESIN KETIK)
+       ======================================================================== */
+    let letterOpened = false;
+    function openEnvelope() {
+      const env = document.getElementById("envelope");
+      const paper = document.getElementById("letter-paper");
+      env.classList.add("open");
+      paper.style.display = "block";
+
+      if (!letterOpened) {
+        letterOpened = true;
+        typeWriterEffect("typewriter-letter", fullLetterText, 24);
+      }
+    }
+
+    function typeWriterEffect(elementId, text, speed) {
+      const target = document.getElementById(elementId);
+      target.textContent = "";
+      let i = 0;
+      function type() {
+        if (i < text.length) {
+          target.textContent += text.charAt(i);
+          i++;
+          setTimeout(type, speed);
+        }
+      }
+      type();
+    }
+
+    /* ========================================================================
+       9. VOICE NOTE PLAYER
+       ======================================================================== */
+    const voiceAudio = document.getElementById("voice-audio");
+    const voiceCard = document.getElementById("voice-card");
+    const vnBtn = document.getElementById("vn-btn");
+    const vnTime = document.getElementById("vn-time");
+
+    function toggleVoiceNote() {
+      if (voiceAudio.paused) {
+        if (isMusicPlaying) bgMusic.pause();
+        voiceAudio.play().then(() => {
+          voiceCard.classList.add("voice-active");
+          vnBtn.textContent = "⏸";
+        }).catch(() => {
+          vnTime.textContent = "File voice-note.mp3 belum dimasukkan";
+        });
+      } else {
+        voiceAudio.pause();
+        resetVoiceUI();
+        if (isMusicPlaying) bgMusic.play();
+      }
+    }
+
+    function updateVoiceTime() {
+      const mins = Math.floor(voiceAudio.currentTime / 60);
+      const secs = Math.floor(voiceAudio.currentTime % 60);
+      vnTime.textContent = `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+    }
+
+    function resetVoiceUI() {
+      voiceCard.classList.remove("voice-active");
+      vnBtn.textContent = "▶";
+      if (isMusicPlaying) bgMusic.play();
+    }
+
+    /* ========================================================================
+       10. KEJUTAN SATU PER SATU & SCROLL ANIMATION DOA
+       ======================================================================== */
+    function revealSurprise(step, e) {
+      const content = document.getElementById("scontent-" + step);
+      content.style.display = "block";
+      spawnBurst(e.clientX, e.clientY);
+
+      const nextBox = document.getElementById("sbox-" + (step + 1));
+      if (nextBox) {
+        nextBox.classList.remove("locked-step");
+      }
+    }
+
+    // Animasi muncul perlahan saat scroll pada bagian Doa & Harapan
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, idx) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add("visible");
+          }, idx * 120);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll(".wish-item").forEach(item => observer.observe(item));
+
+    /* ========================================================================
+       11. FINAL SURPRISE
+       ======================================================================== */
+    let finalOpened = false;
+    function openFinalSurprise(e) {
+      const box = document.getElementById("final-message-box");
+      box.style.display = "block";
+      spawnBurst(e.clientX, e.clientY);
+      setTimeout(() => spawnBurst(window.innerWidth * 0.3, window.innerHeight * 0.5), 300);
+      setTimeout(() => spawnBurst(window.innerWidth * 0.7, window.innerHeight * 0.5), 600);
+
+      if (!finalOpened) {
+        finalOpened = true;
+        typeWriterEffect("final-typing-text", finalSurpriseText, 28);
+      }
+    }
+  </script>
+</body>
+</html>
